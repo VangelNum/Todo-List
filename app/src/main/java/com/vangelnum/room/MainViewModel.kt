@@ -1,14 +1,16 @@
 package com.vangelnum.room
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
+
+    val text = mutableStateOf("")
 
     val readAllData: LiveData<List<TodoItem>>
     private val repository: TodoRepository
