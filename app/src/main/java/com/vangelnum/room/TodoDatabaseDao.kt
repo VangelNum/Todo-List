@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TodoItem::class], version = 1)
+@Database(entities = [TodoItem::class], version = 2)
 abstract class TodoDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
+
     companion object {
         private var INSTANCE: TodoDatabase? = null
         fun getInstance(context: Context): TodoDatabase {
