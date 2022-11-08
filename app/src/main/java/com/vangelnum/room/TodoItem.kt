@@ -15,6 +15,6 @@ data class TodoItem(
     @ColumnInfo(name = "subtitle")
     val subtitle: String,
 
-    @ColumnInfo(name = "is_completed")
-    var isDone: Boolean = false,
+    @ColumnInfo(name = "time")
+    var time: String
 )

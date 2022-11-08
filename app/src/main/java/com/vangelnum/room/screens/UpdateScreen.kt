@@ -1,5 +1,6 @@
 package com.vangelnum.room.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,10 +18,16 @@ import androidx.navigation.NavController
 import com.vangelnum.room.TodoItem
 import com.vangelnum.room.TodoViewModel
 import com.vangelnum.room.navigation.Screens
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Composable
 fun UpdateScreen(navController: NavController, mv: TodoViewModel, id: Long?, title: String?, subtitle: String?) {
+
+    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    val currentDate = sdf.format(Date())
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -43,7 +50,7 @@ fun UpdateScreen(navController: NavController, mv: TodoViewModel, id: Long?, tit
             newsubtitle.value = it
         })
         Button(onClick = {
-            mv.updateTodo(TodoItem(itemId = id!!, title = newtitle.value!!, isDone = true, subtitle = subtitle!!))
+            mv.updateTodo(TodoItem(itemId = id!!,title = newtitle.value!!,newsubtitle.value!!,currentDate))
             navController.navigate(Screens.MainScreen.route)
         }, modifier = Modifier.padding(top = 50.dp)) {
             Text(text = "save update and go back")

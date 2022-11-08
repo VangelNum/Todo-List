@@ -1,6 +1,11 @@
 package com.vangelnum.room.navigation
 
+import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,15 +40,18 @@ fun NavGraph(viewmodel: TodoViewModel) {
         composable(
             route = Screens.MainScreen.route,
         ) {
-            MainScreen(
-                viewmodel = viewmodel,
-                navController = navController,
-            )
+            MaterialTheme(
+                colors = darkColors(background = Color.Black)
+            ) {
+                MainScreen(
+                    viewmodel = viewmodel,
+                    navController = navController,
+                )
+            }
         }
         composable(
             route = Screens.DetailScreen.route
         ) { entry ->
-            //val id = entry.arguments?.getLong("id")
             DetailScreen(navController, viewmodel)
         }
         composable(
