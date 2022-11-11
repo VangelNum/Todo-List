@@ -1,9 +1,7 @@
 package com.vangelnum.room.navigation
 
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavType
@@ -12,13 +10,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.vangelnum.room.TodoViewModel
-import com.vangelnum.room.screens.DetailScreen
+import com.vangelnum.room.screens.AddScreen
 import com.vangelnum.room.screens.MainScreen
 import com.vangelnum.room.screens.UpdateScreen
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("main_screen")
-    object DetailScreen : Screens("detail_screen")
+    object AddScreen : Screens("detail_screen")
     object UpdateScreen : Screens("update_screen")
 
     fun withArgs(vararg args: String?): String {
@@ -50,9 +48,9 @@ fun NavGraph(viewmodel: TodoViewModel) {
             }
         }
         composable(
-            route = Screens.DetailScreen.route
+            route = Screens.AddScreen.route
         ) { entry ->
-            DetailScreen(navController, viewmodel)
+            AddScreen(navController, viewmodel)
         }
         composable(
             route = Screens.UpdateScreen.route + "/{id}/{title}/{subtitle}",

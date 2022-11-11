@@ -1,6 +1,5 @@
 package com.vangelnum.room
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,5 +19,5 @@ data class TodoItem(
     var time: String,
 
     @ColumnInfo(name = "color")
-    var color: Color
+    var color: String,
 )

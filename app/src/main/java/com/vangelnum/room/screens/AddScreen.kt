@@ -1,11 +1,11 @@
 package com.vangelnum.room.screens
 
-import android.util.Log
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.vangelnum.room.R
 import com.vangelnum.room.TodoItem
@@ -24,10 +23,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun DetailScreen(navController: NavController, mv: TodoViewModel) {
+fun AddScreen(navController: NavController, mv: TodoViewModel) {
     val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
     val currentDate = sdf.format(Date())
-    Log.d("check", Calendar.getInstance().time.toString())
+
+
+    var color by rememberSaveable {
+        mutableStateOf("#FF0000")
+    }
 
     val title = rememberSaveable {
         mutableStateOf("")
@@ -35,6 +38,30 @@ fun DetailScreen(navController: NavController, mv: TodoViewModel) {
     val subtitle = rememberSaveable {
         mutableStateOf("")
     }
+
+    var bordercolor1 by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Black))
+    }
+    var bordercolor2 by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Transparent))
+    }
+    var bordercolor3 by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Transparent))
+    }
+    var bordercolor4 by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Transparent))
+    }
+    var bordercolor5 by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Transparent))
+    }
+    var blackcolor by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Black))
+    }
+    var whitecolor by remember {
+        mutableStateOf(BorderStroke(2.dp, Color.Transparent))
+    }
+
+
 
     Scaffold(
         floatingActionButton = {
@@ -44,7 +71,8 @@ fun DetailScreen(navController: NavController, mv: TodoViewModel) {
                         itemId = 0,
                         title = title.value,
                         subtitle = subtitle.value,
-                        time = currentDate)
+                        time = currentDate,
+                        color = color)
                     )
                 }
                 navController.navigate(Screens.MainScreen.route)
@@ -61,51 +89,97 @@ fun DetailScreen(navController: NavController, mv: TodoViewModel) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
-            Row(modifier = Modifier.fillMaxWidth().padding(10.dp),
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 Card(modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1f),
-                    backgroundColor = Color.Blue,
+                    .aspectRatio(1f)
+                    .clickable {
+                        color = "#FFFFFFFF"
+                        bordercolor1 = blackcolor
+                        bordercolor2 = whitecolor
+                        bordercolor3 = whitecolor
+                        bordercolor4 = whitecolor
+                        bordercolor5 = whitecolor
+                    },
+                    backgroundColor = Color(0xFFFFFFFF),
                     shape = CircleShape,
-                    elevation = 5.dp
+                    elevation = 5.dp,
+                    border = bordercolor1
                 ) {
 
                 }
                 Card(modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1f),
-                    backgroundColor = Color.Cyan,
+                    .aspectRatio(1f)
+                    .clickable {
+                        color = "#FF17BFC5"
+                        bordercolor1 = whitecolor
+                        bordercolor2 = blackcolor
+                        bordercolor3 = whitecolor
+                        bordercolor4 = whitecolor
+                        bordercolor5 = whitecolor
+                    },
+                    backgroundColor = Color(0xFF17BFC5),
                     shape = CircleShape,
-                    elevation = 5.dp
+                    elevation = 5.dp,
+                    border = bordercolor2
                 ) {
 
                 }
                 Card(modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1f),
-                    backgroundColor = Color.White,
+                    .aspectRatio(1f)
+                    .clickable {
+                        color = "#FF4CAF50"
+                        bordercolor1 = whitecolor
+                        bordercolor2 = whitecolor
+                        bordercolor3 = blackcolor
+                        bordercolor4 = whitecolor
+                        bordercolor5 = whitecolor
+                    },
+                    backgroundColor = Color(0xFF4CAF50),
                     shape = CircleShape,
-                    elevation = 5.dp
+                    elevation = 5.dp,
+                    border = bordercolor3
                 ) {
 
                 }
                 Card(modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1f),
-                    backgroundColor = Color.Red,
+                    .aspectRatio(1f)
+                    .clickable {
+                        color = "#FFFF0000"
+                        bordercolor1 = whitecolor
+                        bordercolor2 = whitecolor
+                        bordercolor3 = whitecolor
+                        bordercolor4 = blackcolor
+                        bordercolor5 = whitecolor
+                    },
+                    backgroundColor = Color(0xFFFF0000),
                     shape = CircleShape,
-                    elevation = 5.dp
+                    elevation = 5.dp,
+                    border = bordercolor4
                 ) {
 
                 }
                 Card(modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1f),
-                    backgroundColor = Color.Yellow,
+                    .aspectRatio(1f)
+                    .clickable {
+                        color = "#FFFFFB00"
+                        bordercolor1 = whitecolor
+                        bordercolor2 = whitecolor
+                        bordercolor3 = whitecolor
+                        bordercolor4 = whitecolor
+                        bordercolor5 = blackcolor
+                    },
+                    backgroundColor = Color(0xFFFFFB00),
                     shape = CircleShape,
-                    elevation = 5.dp
+                    elevation = 5.dp,
+                    border = bordercolor5
                 ) {
 
                 }

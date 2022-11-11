@@ -2,7 +2,6 @@ package com.vangelnum.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.vangelnum.room.TodoItem
 
 
 @Dao
