@@ -1,17 +1,21 @@
 package com.vangelnum.room.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,25 +40,12 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
             }
         },
         topBar = {
-            TopAppBar(
-                title = { Text(text = "Your note") },
-                navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(painter = painterResource(id = R.drawable.ic_baseline_dehaze_24),
-                            contentDescription = "dehaze")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(painter = painterResource(id = R.drawable.ic_baseline_search_24),
-                            contentDescription = "search")
-                    }
-                }
-            )
+            TopAppBar()
         }
     ) {
 
         LazyColumn(modifier = Modifier.padding(all = 10.dp)) {
+
             items(items) { item ->
                 Card(Modifier
                     .fillMaxWidth()
@@ -84,15 +75,15 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                                 text = item.title,
                                 fontSize = 20.sp,
                                 color = Color.Black,
-                                maxLines = 1
-
+                                maxLines = 1,
+                                fontWeight = FontWeight.W400
                             )
                             Spacer(modifier = Modifier.height(5.dp))
                             Text(
                                 text = item.subtitle,
                                 fontSize = 15.sp,
                                 color = Color.Black,
-                                maxLines = 3,
+                                maxLines = 2,
                                 overflow = TextOverflow.Ellipsis
                             )
                             Spacer(modifier = Modifier.height(5.dp))
@@ -123,4 +114,23 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
         }
     }
 
+}
+
+@Composable
+fun TopAppBar() {
+    TopAppBar(
+        title = { Text(text = "Your note") },
+        navigationIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(painter = painterResource(id = R.drawable.ic_baseline_dehaze_24),
+                    contentDescription = "dehaze")
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(painter = painterResource(id = R.drawable.ic_baseline_search_24),
+                    contentDescription = "search")
+            }
+        }
+    )
 }
