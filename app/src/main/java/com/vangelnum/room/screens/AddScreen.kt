@@ -1,5 +1,7 @@
 package com.vangelnum.room.screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -29,7 +32,7 @@ fun AddScreen(navController: NavController, mv: TodoViewModel) {
 
 
     var color by rememberSaveable {
-        mutableStateOf("#FF0000")
+        mutableStateOf("#FFFFFF")
     }
 
     val title = rememberSaveable {
@@ -61,7 +64,7 @@ fun AddScreen(navController: NavController, mv: TodoViewModel) {
         mutableStateOf(BorderStroke(2.dp, Color.Transparent))
     }
 
-
+    val context: Context = LocalContext.current
 
     Scaffold(
         floatingActionButton = {
@@ -74,8 +77,10 @@ fun AddScreen(navController: NavController, mv: TodoViewModel) {
                         time = currentDate,
                         color = color)
                     )
+                    navController.navigate(Screens.MainScreen.route)
+                } else {
+                    Toast.makeText(context,"Поля не могут быть пустыми",Toast.LENGTH_LONG).show()
                 }
-                navController.navigate(Screens.MainScreen.route)
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_save_24),

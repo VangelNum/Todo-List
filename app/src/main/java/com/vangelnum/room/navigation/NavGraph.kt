@@ -53,7 +53,7 @@ fun NavGraph(viewmodel: TodoViewModel) {
             AddScreen(navController, viewmodel)
         }
         composable(
-            route = Screens.UpdateScreen.route + "/{id}/{title}/{subtitle}",
+            route = Screens.UpdateScreen.route + "/{id}/{title}/{subtitle}/{color}",
             arguments =
             listOf(
                 navArgument("id") {
@@ -70,17 +70,26 @@ fun NavGraph(viewmodel: TodoViewModel) {
                     type = NavType.StringType
                     defaultValue = "null"
                     nullable = false
-                }
+                },
+                navArgument("color") {
+                    type = NavType.StringType
+                    defaultValue = "FFFFFFFF"
+                    nullable = false
+                },
             )
         ) { entry ->
             val id = entry.arguments?.getLong("id")
             val title = entry.arguments?.getString("title")
             val subtitle = entry.arguments?.getString("subtitle")
-            UpdateScreen(navController = navController,
+            val color = entry.arguments?.getString("color")
+            UpdateScreen(
+                navController = navController,
                 mv = viewmodel,
                 id = id,
                 title = title,
-                subtitle = subtitle)
+                subtitle = subtitle,
+                color = color
+            )
         }
     }
 }

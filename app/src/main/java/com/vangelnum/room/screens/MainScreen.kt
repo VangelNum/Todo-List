@@ -1,5 +1,6 @@
 package com.vangelnum.room.screens
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -115,7 +116,7 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
 
                             placeholder = {
                                 Text(
-                                    text = "Search by title",
+                                    text = "Search",
                                     fontSize = 14.sp
                                 )
                             },
@@ -137,7 +138,7 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                                 IconButton(
                                     onClick = {
                                         state.value = TextFieldValue("")
-
+                                        query = ""
                                     }
                                 ) {
                                     Icon(
@@ -195,7 +196,8 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
     ) {
 
         if (query == "") {
-            LazyColumn(modifier = Modifier.padding(all = 10.dp)) {
+            LazyColumn(modifier = Modifier.padding(all = 10.dp),
+                contentPadding = PaddingValues(bottom = 60.dp)) {
 
                 items(items) { item ->
                     Card(Modifier
@@ -218,6 +220,7 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                                                 item.itemId.toString(),
                                                 item.title,
                                                 item.subtitle,
+                                                item.color
                                             ),
                                         )
                                     }
@@ -264,7 +267,6 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                 }
             }
         } else {
-
             LazyColumn(modifier = Modifier.padding(all = 10.dp)) {
                 items(items) { item ->
                     if (item.title.contains(query, ignoreCase = true) || item.subtitle.contains(
@@ -291,6 +293,7 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                                                     item.itemId.toString(),
                                                     item.title,
                                                     item.subtitle,
+                                                    item.color
                                                 ),
                                             )
                                         }
@@ -335,7 +338,9 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                         }
 
                     }
+
                 }
+
             }
         }
     }
