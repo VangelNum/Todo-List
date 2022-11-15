@@ -1,6 +1,5 @@
 package com.vangelnum.room.screens
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.vangelnum.room.R
 import com.vangelnum.room.TodoViewModel
 import com.vangelnum.room.navigation.Screens
+import kotlinx.coroutines.launch
 
 
 fun Color.Companion.parse(colorString: String): Color =
@@ -59,9 +60,11 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
         mutableStateOf("")
     }
 
-
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
 
     Scaffold(
+        scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate(Screens.AddScreen.route) },
                 backgroundColor = Color.White,
@@ -70,6 +73,17 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_add_24),
                     contentDescription = "add")
+            }
+        },
+        drawerContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(60.dp),
+                contentAlignment = Alignment.Center) {
+                Text(
+                    text = "MADE BY VANGELNUM", fontSize = 24.sp, textAlign = TextAlign.Center
+                )
             }
         },
         topBar = {
@@ -82,7 +96,6 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                         }
 
                     }
-
                     val state = remember { mutableStateOf(TextFieldValue("")) }
 
                     AnimatedVisibility(visible = visiblecurrentSearch) {
@@ -170,7 +183,11 @@ fun MainScreen(viewmodel: TodoViewModel, navController: NavController) {
                 },
                 navigationIcon = {
                     if (!searchtext) {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        }) {
                             Icon(painter = painterResource(id = R.drawable.ic_baseline_menu_24),
                                 contentDescription = "menu")
 
