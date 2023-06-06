@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Room</string>
+    <string name="add_note">Add Note</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="save_note">Save note</string>
+    <string name="search_your_note">Search your note</string>
+    <string name="my_notes">My notes</string>
 </resources>

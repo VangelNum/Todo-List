@@ -1,13 +1,14 @@
-package com.vangelnum.room
+package com.vangelnum.room.data.network
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.vangelnum.room.data.model.TodoItem
 
 
 @Dao
 interface TodoDao {
     @Query("SELECT * from my_todo_list")
-    fun getAll(): LiveData<List<TodoItem>>
+    fun getAllNotes(): LiveData<List<TodoItem>>
 
     @Query("SELECT * from my_todo_list where itemId = :id")
     fun getById(id: Int): TodoItem?

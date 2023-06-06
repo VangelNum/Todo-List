@@ -1,4 +1,4 @@
-package com.vangelnum.room
+package com.vangelnum.room.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "my_todo_list")
 data class TodoItem(
     @PrimaryKey(autoGenerate = true)
-    var itemId: Long,
+    var itemId: Int,
 
     @ColumnInfo(name = "title")
     val title: String,
