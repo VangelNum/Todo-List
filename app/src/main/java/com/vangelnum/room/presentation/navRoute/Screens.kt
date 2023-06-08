@@ -1,4 +1,4 @@
-package com.vangelnum.room.presentation
+package com.vangelnum.room.presentation.navRoute
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("main_screen")

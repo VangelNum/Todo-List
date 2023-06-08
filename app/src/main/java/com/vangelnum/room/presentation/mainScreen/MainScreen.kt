@@ -1,4 +1,4 @@
-package com.vangelnum.room.presentation.screens
+package com.vangelnum.room.presentation.mainScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -111,14 +111,20 @@ fun TodoItemsList(
         Card(
             Modifier
                 .fillMaxWidth()
-                .padding(bottom = 10.dp),
+                .padding(bottom = 10.dp).clickable {
+                    navigateToUpdateScreen(
+                        todoItems.itemId,
+                        todoItems.title,
+                        todoItems.subtitle,
+                        todoItems.color
+                    )
+                },
             backgroundColor = Color(android.graphics.Color.parseColor(todoItems.color)),
             elevation = 5.dp,
             shape = RoundedCornerShape(15)
         ) {
             TodoItemRow(
                 item = todoItems,
-                navigateToUpdateScreen = navigateToUpdateScreen,
                 deleteTodo = deleteTodo
             )
         }
@@ -129,12 +135,6 @@ fun TodoItemsList(
 @Composable
 fun TodoItemRow(
     item: TodoItem,
-    navigateToUpdateScreen: (
-        id: Int,
-        title: String,
-        subtitle: String,
-        color: String
-    ) -> Unit,
     deleteTodo: (item: TodoItem) -> Unit
 ) {
     Row(
@@ -145,14 +145,6 @@ fun TodoItemRow(
             verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = Modifier
                 .weight(1f)
-                .clickable {
-                    navigateToUpdateScreen(
-                        item.itemId,
-                        item.title,
-                        item.subtitle,
-                        item.color
-                    )
-                }
         ) {
             Text(
                 text = item.title,

@@ -15,16 +15,19 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.vangelnum.room.presentation.Screens
+import com.vangelnum.room.presentation.navRoute.Screens
 import com.vangelnum.room.presentation.TodoViewModel
-import com.vangelnum.room.presentation.screens.AddScreen
-import com.vangelnum.room.presentation.screens.MainScreen
-import com.vangelnum.room.presentation.screens.UpdateScreen
+import com.vangelnum.room.presentation.updateScreen.UpdateState
+import com.vangelnum.room.presentation.addScreen.AddScreen
+import com.vangelnum.room.presentation.addScreen.AddState
+import com.vangelnum.room.presentation.mainScreen.MainScreen
+import com.vangelnum.room.presentation.updateScreen.UpdateScreen
 import com.vangelnum.room.ui.theme.RoomTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                 todoItems = todoItems,
                                 navigateToUpdateScreen = { id, title, subtitle, color ->
                                     navController.navigate(
-                                        Screens.UpdateScreen.route + "/$id/$title/$subtitle/$subtitle"
+                                        Screens.UpdateScreen.route + "/$id/$title/$subtitle/$color"
                                     )
                                 },
                                 navigateToAddScreen = {
@@ -74,11 +77,14 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screens.AddScreen.route
                         ) {
-                            AddScreen(addNote = {
-                                todoViewModel.addTodo(it)
+                            val addState = todoViewModel.addState.collectAsStateWithLifecycle(
+                                AddState.None
+                            )
+                            AddScreen(addNote = { todoItem ->
+                                todoViewModel.addTodo(todoItem)
                             }, navigateToMainScreen = {
                                 navController.navigate(Screens.MainScreen.route)
-                            })
+                            }, addState.value)
                         }
                         composable(
                             route = Screens.UpdateScreen.route + "/{id}/{title}/{subtitle}/{color}",
@@ -91,12 +97,12 @@ class MainActivity : ComponentActivity() {
                                 },
                                 navArgument("title") {
                                     type = NavType.StringType
-                                    defaultValue = "null"
+                                    defaultValue = "title"
                                     nullable = false
                                 },
                                 navArgument("subtitle") {
                                     type = NavType.StringType
-                                    defaultValue = "null"
+                                    defaultValue = "subtitle"
                                     nullable = false
                                 },
                                 navArgument("color") {
@@ -107,9 +113,12 @@ class MainActivity : ComponentActivity() {
                             )
                         ) { entry ->
                             val id = entry.arguments?.getInt("id")
-                            val title = entry.arguments?.getString("title")
-                            val subtitle = entry.arguments?.getString("subtitle")
+                            val title = entry.arguments?.getString("title") ?: ""
+                            val subtitle = entry.arguments?.getString("subtitle") ?: ""
                             val color = entry.arguments?.getString("color")
+                            val updateState = todoViewModel.updateState.collectAsStateWithLifecycle(
+                                initialValue = UpdateState.None
+                            ).value
                             UpdateScreen(
                                 id = id,
                                 title = title,
@@ -120,7 +129,8 @@ class MainActivity : ComponentActivity() {
                                 },
                                 navigateToMainScreen = {
                                     navController.navigate(Screens.MainScreen.route)
-                                }
+                                },
+                                updateState
                             )
                         }
                     }
