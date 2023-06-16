@@ -3,7 +3,14 @@
     <string name="add_note">Add Note</string>
     <string name="delete_note">Delete Note</string>
     <string name="save_note">Save note</string>
-    <string name="search_your_note">Search your note</string>
+    <string name="search_your_note">Your note</string>
     <string name="my_notes">My notes</string>
     <string name="error_add_message">Заголовок и подзаголовок не могут быть пустыми</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="color">Color</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Desending</string>
+    <string name="delete">Delete note</string>
+    <string name="sort">Sort notes</string>
 </resources>
